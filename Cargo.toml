@@ -2,7 +2,9 @@
 name = "zet"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+authors = ["Peter A. Ramaldes <peter.ramaldes@gmail.com>"]
+license = "GPL-3.0"
+description = "Zettlekasten Command Line written in Rust" 
+repository = "https://github.com/peterramaldes/zet.git"
 
 [dependencies]
