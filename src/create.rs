@@ -3,7 +3,6 @@ use std::{
     env,
     fs::{self, File},
     io,
-    os::unix::process::CommandExt,
     process::Command,
 };
 
@@ -26,7 +25,7 @@ pub fn run() -> io::Result<()> {
 
     // Open the file using the $EDITOR env, using the `vi` if doesn´t set
     let editor = env::var("EDITOR").unwrap_or_else(|_e| String::from("vi"));
-    Command::new(editor).arg(file_path).exec();
+    let _ = Command::new(editor).arg(file_path).status()?;
 
     Ok(())
 }
