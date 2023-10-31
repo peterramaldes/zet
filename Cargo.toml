@@ -8,3 +8,5 @@ description = "Zettlekasten Command Line written in Rust"
 repository = "https://github.com/peterramaldes/zet.git"
 
 [dependencies]
+chrono = "0.4.31"
+clap = { version = "4.4.7", features = ["derive"] }
