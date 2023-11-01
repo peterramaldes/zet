@@ -1,4 +1,5 @@
 pub mod create;
+pub mod search;
 
 use clap::Parser;
 
@@ -16,6 +17,10 @@ enum Subcommand {
     /// the env isn´t set.
     #[clap(visible_alias = "c")]
     Create,
+
+    /// Search specific words on the Zettelkasten repository
+    #[clap(visible_alias = "s")]
+    Search,
 }
 
 fn main() -> std::io::Result<()> {
@@ -23,5 +28,6 @@ fn main() -> std::io::Result<()> {
 
     return match cli.subcommand {
         Subcommand::Create => create::run(),
+        Subcommand::Search => search::run(),
     };
 }
