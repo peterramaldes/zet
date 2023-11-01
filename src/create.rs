@@ -7,7 +7,7 @@ use std::{
 };
 
 pub fn run() -> io::Result<()> {
-    let path = get_path_from_files();
+    let path = zet::dir();
 
     // Create the path if doesn't exists, thrown an error if cannot
     fs::create_dir_all(&path)?;
@@ -15,7 +15,11 @@ pub fn run() -> io::Result<()> {
     // Create dir if doesn´t exists
     let today = Utc::now();
     let folder_name = today.date_naive().format("%Y%m%d");
-    let folder_path = format!("{path}/{folder_name}");
+    let folder_path = format!(
+        "{}/{}",
+        path.into_os_string().into_string().unwrap(),
+        folder_name
+    );
     let _ = fs::create_dir(&folder_path);
 
     // Create the file
@@ -28,29 +32,4 @@ pub fn run() -> io::Result<()> {
     let _ = Command::new(editor).arg(file_path).status()?;
 
     Ok(())
-}
-
-/// Get path with this precendece:
-///
-/// 1. $ZET_PATH
-/// 2. $HOME/.config/zet
-///
-/// This function is not portable, the .config folder will not work on windows
-fn get_path_from_files() -> String {
-    let mut path = match env::var("ZET_PATH") {
-        Ok(val) => String::from(val),
-        Err(_e) => "".to_string(),
-    };
-
-    if path.is_empty() {
-        let home = match env::var("HOME") {
-            Ok(val) => String::from(val),
-            Err(_e) => panic!("doesn't have $HOME env set"), // TODO: this should not be a problem
-                                                             // for windows :(
-        };
-
-        path = format!("{home}/.config/zet");
-    }
-
-    path
 }
