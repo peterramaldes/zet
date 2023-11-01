@@ -3,12 +3,12 @@ use std::{
     path::{Path, PathBuf},
 };
 
-/// Retrieve the current dir for Zettelkasten notes
+/// Returns the directory for Zettelkasten repository
 ///
-/// 1. $ZET_PATH
-/// 2. $HOME/.config/zet
+/// The Zettelkasten repository take the below procedence:
+/// 1. `${ZET_PATH}`
+/// 2. `$HOME/.config/zet`
 ///
-/// This function is not portable, the .config folder will not work on windows
 pub fn dir() -> PathBuf {
     let mut path = match env::var("ZET_PATH") {
         Ok(val) => String::from(val),
