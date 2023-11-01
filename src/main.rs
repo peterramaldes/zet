@@ -1,7 +1,7 @@
 pub mod create;
 pub mod search;
 
-use clap::Parser;
+use clap::{Args, Parser};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -20,7 +20,18 @@ enum Subcommand {
 
     /// Search specific words on the Zettelkasten repository
     #[clap(visible_alias = "s")]
-    Search,
+    Search(SearchArgs),
+}
+
+#[derive(Args, Debug)]
+pub struct SearchArgs {
+    /// The word that you are trying to find on Zettelkasten repository
+    #[arg(short, long)]
+    target_word: Option<String>,
+
+    /// If this flag enable, means that the word search using the `target_word` will ignore case
+    #[arg(short, long)]
+    ignore_case: bool,
 }
 
 fn main() -> std::io::Result<()> {
@@ -28,6 +39,6 @@ fn main() -> std::io::Result<()> {
 
     return match cli.subcommand {
         Subcommand::Create => create::run(),
-        Subcommand::Search => search::run(),
+        Subcommand::Search(args) => search::run(args),
     };
 }
