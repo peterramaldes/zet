@@ -16,6 +16,6 @@ jobs:
           # TODO: --run-types doctests --run-types lib 
           cargo +nightly tarpaulin --verbose --all-features --workspace --timeout 120 --run-types tests --out xml
       - name: Upload to codecov.io
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: true
